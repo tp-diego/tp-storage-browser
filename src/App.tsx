@@ -116,7 +116,7 @@ function App() {
         <>
           <div className="header">
             <h1>{`Bienvenido ${user?.signInDetails?.loginId}`}</h1>
-            <Button onClick={signOut}>Sign out</Button>
+            <Button className="sign-out-button" onClick={signOut}>Sign out</Button>
           </div>
           <View backgroundColor="background.tertiary" {...theme.containerProps()}>
             <StorageBrowser />
