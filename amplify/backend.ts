@@ -55,30 +55,30 @@ const backend = defineBackend({
 
 const customBucketStack = backend.createStack("custom-bucket-stack");
 
-const s3-systems-amplify-test = Bucket.fromBucketAttributes(customBucketStack, "systems-amplify-test", {
+const s3systemsamplifytest = Bucket.fromBucketAttributes(customBucketStack, "systems-amplify-test", {
   bucketArn: "arn:aws:s3:::systems-amplify-test",
   bucketName: "systems-amplify-test",
   region: "eu-central-1",
 });
-const s3-systems-systems-billing-data = Bucket.fromBucketAttributes(customBucketStack, "systems-billing-data", {
+const s3systemsbillingdata = Bucket.fromBucketAttributes(customBucketStack, "systems-billing-data", {
   bucketArn: "arn:aws:s3:::systems-billing-data",
   bucketName: "systems-billing-data",
   region: "eu-central-1",
 });
 
-backend.addOutput("systems-amplify-test", s3-systems-amplify-test.bucketName);
-backend.addOutput("systems-billing-data", s3-systems-billing-data.bucketName);
+backend.addOutput("systems-amplify-test", s3systemsamplifytest.bucketName);
+backend.addOutput("systems-billing-data", s3systemsbillingdata.bucketName);
 
 const groupName = "systems";
 
-s3-systems-amplify-test.addToResourcePolicy(new iam.PolicyStatement({
+s3systemsamplifytest.addToResourcePolicy(new iam.PolicyStatement({
   actions: ['s3:GetObject', 's3:PutObject'],
-  resources: [s3-systems-amplify-test.arnForObjects('systems/*')],
+  resources: [s3systemsamplifytest.arnForObjects('systems/*')],
   principals: [new iam.ArnPrincipal(`arn:aws:iam::${backend.account}:role/${groupName}`)],
 }));
 
-s3-systems-billing-data.addToResourcePolicy(new iam.PolicyStatement({
+s3systemsbillingdata.addToResourcePolicy(new iam.PolicyStatement({
   actions: ['s3:GetObject', 's3:PutObject'],
-  resources: [s3-systems-billing-data.arnForObjects('systems/*')],
+  resources: [s3systemsbillingdata.arnForObjects('systems/*')],
   principals: [new iam.ArnPrincipal(`arn:aws:iam::${backend.account}:role/${groupName}`)],
 }));
