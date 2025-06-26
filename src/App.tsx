@@ -54,8 +54,8 @@ Amplify.configure({
           region: "eu-central-1",
           paths: {
             "systems/*": {
-              authenticated: ["get", "list"],
-              //groupsadmin: ["get", "list", "write", "delete"],
+              //authenticated: ["get", "list"],
+              groupssystems: ["get", "list", "write", "delete"],
             },
           }
         }
