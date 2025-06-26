@@ -5,7 +5,7 @@ import {
 import '@aws-amplify/ui-react-storage/styles.css';
 import './App.css';
 
-import config from '../amplify_outputs.json';
+//import config from '../amplify_outputs.json';
 import { Amplify } from 'aws-amplify';
 import { Authenticator, Button, View, Image, useTheme, Text, Heading, useAuthenticator } from '@aws-amplify/ui-react';
 
