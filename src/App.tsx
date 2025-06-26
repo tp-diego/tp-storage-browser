@@ -83,7 +83,7 @@ const storageBrowserTheme = defineComponentTheme({
 
 const theme = createTheme({
   name: 'my-theme',
-  primaryColor: 'green',
+  primaryColor: 'purple',
   components: [storageBrowserTheme],
 });
 
