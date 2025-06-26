@@ -30,18 +30,18 @@ const awsExports = {
       // default bucket metadata should be duplicated below with any additional buckets
       buckets: [{
         "systems-amplify-test": {
-        bucketName: "systems-amplify-test",
-        region: "eu-central-1"
+          bucketName: "systems-amplify-test",
+          region: "eu-central-1"
         }
       },
       {
         "systems-billing-data": {
-        bucketName: "systems-billing-data",
-        region: "eu-central-1"
+          bucketName: "systems-billing-data",
+          region: "eu-central-1"
         }
-      }
-    }]
+      }]
+    }
   }
-});
+};
 
 export default awsExports;
