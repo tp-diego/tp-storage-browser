@@ -1,7 +1,7 @@
 import { defineStorage } from '@aws-amplify/backend';
 
 export const storage = defineStorage({
-  name: 'myStorageBucket',
+  name: 'systems-amplify-test',
   isDefault: true,
    access: (allow) => ({
     'systems/*': [
