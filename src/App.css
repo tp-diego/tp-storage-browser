@@ -24,7 +24,8 @@
     var(--amplify-colors-purple-80),
     var(--amplify-colors-pink-40)
   );
-  color: var(--amplify-colors-white-100);
+  //color: var(--amplify-colors-white-100);
+  color: { value: '{colors.white.100}' };
 }
 
 [data-amplify-authenticator] {
