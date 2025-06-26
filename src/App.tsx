@@ -6,6 +6,8 @@ import '@aws-amplify/ui-react-storage/styles.css';
 import './App.css';
 
 //import config from '../amplify_outputs.json';
+
+import awsExports from './aws-exports';
 import { Amplify } from 'aws-amplify';
 import { Authenticator, Button, View, Image, useTheme, Text, Heading, useAuthenticator } from '@aws-amplify/ui-react';
 
@@ -18,6 +20,8 @@ import {
 } from '@aws-amplify/ui-react/server';
 
 //Amplify.configure(config);
+Amplify.configure(awsExports);
+/*
 Amplify.configure({
   Auth: {
     Cognito: {
@@ -57,7 +61,7 @@ Amplify.configure({
     }
   }
 });
-
+*/
 const storageBrowserTheme = defineComponentTheme({
   name: 'storage-browser',
   theme: (tokens) => {
