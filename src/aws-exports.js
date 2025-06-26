@@ -35,8 +35,8 @@ const awsExports = {
         }
       },
       {
-        "systems-amplify-test": {
-        bucketName: "systems-amplify-test",
+        "systems-billing-data": {
+        bucketName: "systems-billing-data",
         region: "eu-central-1"
         }
       }
