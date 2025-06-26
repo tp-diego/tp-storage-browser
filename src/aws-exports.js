@@ -28,18 +28,28 @@ const awsExports = {
       bucket: "systems-amplify-test",
       region: "eu-central-1",
       // default bucket metadata should be duplicated below with any additional buckets
-      buckets: [{
+      buckets: {
         "systems-amplify-test": {
           bucketName: "systems-amplify-test",
-          region: "eu-central-1"
-        }
-      },
-      {
+          region: "eu-central-1",
+          paths: {
+            "systems/*": {
+              autheticated: ["get","list"],
+              groupssystems: ["get","list","write","delete"],
+            },
+          }
+        },
         "systems-billing-data": {
           bucketName: "systems-billing-data",
-          region: "eu-central-1"
+          region: "eu-central-1",
+          paths: {
+            "systems/*": {
+              autheticated: ["get","list"],
+              groupssystems: ["get","list","write","delete"],
+            },
+          }
         }
-      }]
+      }
     }
   }
 };
