@@ -42,7 +42,7 @@ Amplify.configure({
         requireSpecialCharacters: true,
       },
     },
-  },
+  },/*
   Storage: {
     S3: {
       bucket: "systems-amplify-test",
@@ -61,7 +61,19 @@ Amplify.configure({
         }
       }
     }
-  }
+  }*/
+  
+  Storage: {
+    bucket: 'systems-amplify-test',
+    region: 'eu-central-1',
+    // Define the path and permissions for the Cognito group
+    cognitoGroupPermissions: {
+      groupName: 'systems',
+      path: 'systems/*',
+      actions: ['s3:GetObject', 's3:PutObject'],
+    },
+  }
+
 });
 
 const storageBrowserTheme = defineComponentTheme({
