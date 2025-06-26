@@ -58,12 +58,12 @@ const customBucketStack = backend.createStack("custom-bucket-stack");
 const s3-systems-amplify-test = Bucket.fromBucketAttributes(customBucketStack, "systems-amplify-test", {
   bucketArn: "arn:aws:s3:::systems-amplify-test",
   bucketName: "systems-amplify-test",
-  region: "eu-central-1"
+  region: "eu-central-1",
 });
 const s3-systems-systems-billing-data = Bucket.fromBucketAttributes(customBucketStack, "systems-billing-data", {
   bucketArn: "arn:aws:s3:::systems-billing-data",
   bucketName: "systems-billing-data",
-  region: "eu-central-1"
+  region: "eu-central-1",
 });
 
 backend.addOutput("systems-amplify-test", s3-systems-amplify-test.bucketName);
