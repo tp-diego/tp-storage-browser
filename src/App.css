@@ -18,6 +18,14 @@
   );
 }
 
+.sign-out-button {
+  background: linear-gradient(
+    to right,
+    var(--amplify-colors-purple-80),
+    var(--amplify-colors-pink-40)
+  );
+}
+
 [data-amplify-authenticator] {
   --amplify-components-authenticator-router-box-shadow: 0 0 16px var(--amplify-colors-overlay-10);
   --amplify-components-authenticator-router-border-width: 0;
