@@ -27,7 +27,7 @@ backend.addOutput({
     bucket_name: customBucket.bucketName,
     buckets: [
       {
-        aws_region: customBucket.env.region,
+        //aws_region: customBucket.env.region,
         bucket_name: customBucket.bucketName,
         name: customBucket.bucketName,
         paths: {
