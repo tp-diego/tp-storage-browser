@@ -33,8 +33,8 @@ backend.addOutput({
         name: customBucket.bucketName,
         paths: {
           "systems/*": {
-            guest: ["get", "list"],
-            //authenticated: ["get", "list", "write", "delete"],
+            //guest: ["get", "list"],
+            authenticated: ["get", "list"],
             groupsadmin: ["get", "list", "write", "delete"],
           },
         },
@@ -52,12 +52,38 @@ const authPolicy = new Policy(backend.stack, "customBucketAuthPolicy", {
   statements: [
     new PolicyStatement({
       effect: Effect.ALLOW,
+      actions: ["s3:GetObject", "s3:ListBucket"],
+      resources: [
+        `${customBucket.bucketArn}`,
+        `${customBucket.bucketArn}/*`
+      ],
+      conditions: {
+        StringLike: {
+          "s3:prefix": ["systems/", "systems/*"],
+        },
+      },
+    }),
+  ],
+});
+
+// Add the policies to the authenticated user role
+backend.auth.resources.authenticatedUserIamRole.attachInlinePolicy(
+  authPolicy,
+);
+
+// Add the policies to the authenticated user role
+backend.auth.resources.authenticatedUserIamRole.attachInlinePolicy(authPolicy);
+
+const adminPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
+  statements: [
+    new PolicyStatement({
+      effect: Effect.ALLOW,
       actions: [
         "s3:GetObject",
         "s3:PutObject", 
         "s3:DeleteObject"
       ],
-      resources: [`${customBucket.bucketArn}/systems/*`,],
+      resources: [ `${customBucket.bucketArn}/systems/*`],
     }),
     new PolicyStatement({
       effect: Effect.ALLOW,
@@ -65,7 +91,7 @@ const authPolicy = new Policy(backend.stack, "customBucketAuthPolicy", {
       resources: [
         `${customBucket.bucketArn}`,
         `${customBucket.bucketArn}/*`
-        ],
+      ],
       conditions: {
         StringLike: {
           "s3:prefix": ["systems/*", "systems/"],
@@ -75,5 +101,6 @@ const authPolicy = new Policy(backend.stack, "customBucketAuthPolicy", {
   ],
 });
 
-// Add the policies to the authenticated user role
-backend.auth.resources.authenticatedUserIamRole.attachInlinePolicy(authPolicy);
+
+// Add the policies to the "admin" user group role
+backend.auth.resources.groups["admin"].role.attachInlinePolicy(adminPolicy);
