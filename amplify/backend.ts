@@ -34,7 +34,8 @@ backend.addOutput({
         paths: {
           "systems/*": {
             guest: ["get", "list"],
-            authenticated: ["get", "list", "write", "delete"],
+            //authenticated: ["get", "list", "write", "delete"],
+            groupsadmin: ["get", "list", "write", "delete"],
           },
         },
       }
