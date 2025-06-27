@@ -31,13 +31,13 @@ backend.addOutput({
         aws_region: customBucket.env.region,
         bucket_name: customBucket.bucketName,
         name: customBucket.bucketName,
-        paths: {
+        /*paths: {
           "systems/*": {
             //guest: ["get", "list"],
             authenticated: ["get", "list"],
             groupsadmin: ["get", "list", "write", "delete"],
           },
-        },
+        },*/
       }
     ]
   },
