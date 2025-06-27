@@ -18,16 +18,17 @@ const customBucketStack = backend.createStack("custom-bucket-stack");
 // Import existing bucket
 const customBucket = Bucket.fromBucketAttributes(customBucketStack, "MyCustomBucket", {
   bucketArn: "arn:aws:s3:::systems-amplify-test",
+  bucketName: "systems-amplify-test",
   region: "eu-central-1"
 });
 
 backend.addOutput({
   storage: {
-    aws_region: customBucket.env.region,
-    bucket_name: customBucket.bucketName,
+    //aws_region: customBucket.env.region,
+    //bucket_name: customBucket.bucketName,
     buckets: [
       {
-        //aws_region: customBucket.env.region,
+        aws_region: customBucket.env.region,
         bucket_name: customBucket.bucketName,
         name: customBucket.bucketName,
         paths: {
