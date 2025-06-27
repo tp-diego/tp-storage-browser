@@ -1,6 +1,6 @@
 import { defineBackend } from '@aws-amplify/backend';
 import { auth } from './auth/resource';
-import { storage, secondaryStorage } from './storage/resource';
+//import { storage, secondaryStorage } from './storage/resource';
 import { Effect, Policy, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 
@@ -8,9 +8,9 @@ import { Bucket } from "aws-cdk-lib/aws-s3";
  * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
  */
 const backend = defineBackend({
-  auth,
-  storage, 
-  secondaryStorage
+  auth
+//  storage, 
+//  secondaryStorage
 });
 
 const customBucketStack = backend.createStack("custom-bucket-stack");
