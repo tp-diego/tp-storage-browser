@@ -44,7 +44,7 @@ backend.addOutput({
         // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
           "systems/*": {
-            groupsclients: ["get", "list", "write", "delete"],
+            groupsclientes: ["get", "list", "write", "delete"],
           },
         },
       }
