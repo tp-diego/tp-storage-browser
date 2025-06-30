@@ -13,17 +13,17 @@ import { storage } from './storage/resource';
 */
 
 import { defineBackend } from "@aws-amplify/backend";
-//import { Effect, Policy, PolicyStatement } from "aws-cdk-lib/aws-iam";
-//import { Bucket } from "aws-cdk-lib/aws-s3";
+import { Effect, Policy, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { Bucket } from "aws-cdk-lib/aws-s3";
 import { auth } from "./auth/resource";
-import { storage } from './storage/resource';
+//import { storage } from './storage/resource';
 
 const backend = defineBackend({
   auth,
-  storage,
+//  storage,
 });
 
-/*
+
 const customBucketStack = backend.createStack("custom-bucket-stack");
 
 // Import existing bucket
@@ -43,11 +43,46 @@ backend.addOutput({
         name: customBucket.bucketName,
         paths: {
           "systems/*": {
-            authenticated: ["get", "list"],
+            systems: ["get", "list"],
           },
         },
       }
     ]
   },
 });
-*/
+
+/*
+  Define an inline policy to attach to "admin" user group role
+  This policy defines how authenticated users with 
+  "admin" user group role can access your existing bucket
+*/ 
+const adminPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
+  statements: [
+    new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: [
+        "s3:GetObject",
+        "s3:PutObject", 
+        "s3:DeleteObject"
+      ],
+      resources: [ `${customBucket.bucketArn}/systems/*`],
+    }),
+    new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: ["s3:ListBucket"],
+      resources: [
+        `${customBucket.bucketArn}`,
+        `${customBucket.bucketArn}/*`
+      ],
+      conditions: {
+        StringLike: {
+          "s3:prefix": ["systems/*", "systems/"],
+        },
+      },
+    }),
+  ],
+});
+
+
+// Add the policies to the "admin" user group role
+backend.auth.resources.groups["systems"].role.attachInlinePolicy(adminPolicy);
