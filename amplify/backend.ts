@@ -43,7 +43,7 @@ backend.addOutput({
         name: customBucket.bucketName,
         paths: {
           "systems/*": {
-            groupsclientes: ["get", "list"],
+            "clientes": ["get", "list"],
           },
         },
       }
