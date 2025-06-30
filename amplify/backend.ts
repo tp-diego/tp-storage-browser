@@ -1,26 +1,10 @@
-/*import { defineBackend } from '@aws-amplify/backend';
-import { auth } from './auth/resource';
-import { storage } from './storage/resource';
-
-
-/**
- * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
- */
-/*defineBackend({
-  auth,
-  storage
-});
-*/
-
 import { defineBackend } from "@aws-amplify/backend";
 import { Effect, Policy, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 import { auth } from "./auth/resource";
-//import { storage } from './storage/resource';
 
 const backend = defineBackend({
   auth,
-//  storage,
 });
 
 
@@ -34,8 +18,6 @@ const customBucket = Bucket.fromBucketAttributes(customBucketStack, "MyCustomBuc
 
 backend.addOutput({
   storage: {
-    //aws_region: customBucket.env.region,
-    //bucket_name: customBucket.bucketName,
     buckets: [
       {
         aws_region: customBucket.env.region,
@@ -83,7 +65,6 @@ const adminPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
     }),
   ],
 });
-
 
 // Add the policies to the "admin" user group role
 backend.auth.resources.groups["clientes"].role.attachInlinePolicy(adminPolicy);
