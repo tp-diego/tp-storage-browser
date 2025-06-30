@@ -43,7 +43,7 @@ backend.addOutput({
         name: customBucket.bucketName,
         paths: {
           "systems/*": {
-            systems: ["get", "list"],
+            clientes: ["get", "list"],
           },
         },
       }
@@ -85,4 +85,4 @@ const adminPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
 
 
 // Add the policies to the "admin" user group role
-backend.auth.resources.groups["systems"].role.attachInlinePolicy(adminPolicy);
+backend.auth.resources.groups["clientes"].role.attachInlinePolicy(adminPolicy);
