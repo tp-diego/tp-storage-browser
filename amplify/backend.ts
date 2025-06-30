@@ -34,16 +34,17 @@ const customBucket = Bucket.fromBucketAttributes(customBucketStack, "MyCustomBuc
 
 backend.addOutput({
   storage: {
-    aws_region: customBucket.env.region,
-    bucket_name: customBucket.bucketName,
+    //aws_region: customBucket.env.region,
+    //bucket_name: customBucket.bucketName,
     buckets: [
       {
         aws_region: customBucket.env.region,
         bucket_name: customBucket.bucketName,
         name: customBucket.bucketName,
+        // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
           "systems/*": {
-            "clientes": ["get", "list"],
+            groupsclients: ["get", "list", "write", "delete"],
           },
         },
       }
