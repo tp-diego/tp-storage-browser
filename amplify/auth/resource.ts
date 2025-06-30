@@ -8,5 +8,9 @@ export const auth = defineAuth({
   loginWith: {
     email: true,
   },
-  groups: ['systems']
+  groups: ['systems'],/*
+  multifactor: {
+    mode: 'REQUIRED',
+    totp: true
+  }*/
 });
