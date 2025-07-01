@@ -1,4 +1,4 @@
-/*import { defineStorage } from '@aws-amplify/backend';
+import { defineStorage } from '@aws-amplify/backend';
 
 export const storage = defineStorage({
   name: 'systems-amplify-test1'/*,
@@ -9,4 +9,4 @@ export const storage = defineStorage({
         allow.groups(['systems']).to(['read', 'write', 'delete']),
     ]
    })*/
-//});
+});
