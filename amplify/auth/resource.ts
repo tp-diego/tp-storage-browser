@@ -8,7 +8,14 @@ export const auth = defineAuth({
   loginWith: {
     email: true,
   },
-  groups: ['systems','clientes'],/*
+  groups: ['systems','clientes'],
+  userAttributes: {
+    // specify a "givenName" attribute
+    givenName: {
+      mutable: true,
+      required: false,
+    }
+  },/*
   multifactor: {
     mode: 'REQUIRED',
     totp: true
