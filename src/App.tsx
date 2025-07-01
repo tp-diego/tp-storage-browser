@@ -7,7 +7,7 @@ import './App.css';
 
 import config from '../amplify_outputs.json';
 
-import awsExports from './aws-exports';
+//import awsExports from './aws-exports';
 import { Amplify } from 'aws-amplify';
 import { Authenticator, Button, View, Image, useTheme, Text, Heading, useAuthenticator } from '@aws-amplify/ui-react';
 
