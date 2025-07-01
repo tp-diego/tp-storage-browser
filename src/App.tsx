@@ -5,7 +5,7 @@ import {
 import '@aws-amplify/ui-react-storage/styles.css';
 import './App.css';
 
-//import config from '../amplify_outputs.json';
+import config from '../amplify_outputs.json';
 
 import awsExports from './aws-exports';
 import { Amplify } from 'aws-amplify';
@@ -19,8 +19,8 @@ import {
   defineComponentTheme,
 } from '@aws-amplify/ui-react/server';
 
-//Amplify.configure(config);
-Amplify.configure(awsExports);
+Amplify.configure(config);
+//Amplify.configure(awsExports);
 
 const storageBrowserTheme = defineComponentTheme({
   name: 'storage-browser',
