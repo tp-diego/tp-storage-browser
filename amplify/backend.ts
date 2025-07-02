@@ -36,6 +36,29 @@ backend.addOutput({
   },
 });
 
+const sabadell = Bucket.fromBucketAttributes(customBucketStack, "Sabadell", {
+  bucketArn: "arn:aws:s3:::clientesabadell",
+  region: "eu-west-1"
+});
+
+backend.addOutput({
+  storage: {
+    buckets: [
+      {
+        aws_region: sabadell.env.region,
+        bucket_name: sabadell.bucketName,
+        name: sabadell.bucketName,
+        // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
+        paths: {
+          "Grabaciones/Diaria/*": {
+            groupssabadell: ["get", "list", "write", "delete"],
+          },
+        },
+      }
+    ]
+  },
+});
+
 /*
   Define an inline policy to attach to "admin" user group role
   This policy defines how authenticated users with 
