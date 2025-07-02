@@ -94,3 +94,4 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
 
 // Add the policies to the "admin" user group role
 backend.auth.resources.groups["clientes"].role.attachInlinePolicy(accessPolicy);
+backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(accessPolicy);
