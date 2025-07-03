@@ -59,6 +59,29 @@ backend.addOutput({
   },
 });
 
+const purificacion = Bucket.fromBucketAttributes(customBucketStack, "Purificacion", {
+  bucketArn: "arn:aws:s3:::cliente-pg-ch",
+  region: "eu-west-1"
+});
+
+backend.addOutput({
+  storage: {
+    buckets: [
+      {
+        aws_region: purificacion.env.region,
+        bucket_name: purificacion.bucketName,
+        name: purificacion.bucketName,
+        // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
+        paths: {
+          "Grabaciones/*": {
+            groupssabadell: ["get", "list", "write", "delete"],
+          },
+        },
+      }
+    ]
+  },
+});
+
 /*
   Define an inline policy to attach to "admin" user group role
   This policy defines how authenticated users with 
@@ -75,23 +98,11 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
         "s3:DeleteObject"
       ],
       resources: [ "arn:aws:s3:::*"],
-    })/*,
-    new PolicyStatement({
-      effect: Effect.ALLOW,
-      actions: ["s3:ListBucket"],
-      resources: [
-        `${customBucket.bucketArn}`,
-        `${customBucket.bucketArn}/*`
-      ],
-      conditions: {
-        StringLike: {
-          "s3:prefix": ["systems/*", "systems/"],
-        },
-      },
-    }),*/
+    })
   ],
 });
 
 // Add the policies to the "admin" user group role
 backend.auth.resources.groups["clientes"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(accessPolicy);
+backend.auth.resources.groups["purificacion"].role.attachInlinePolicy(accessPolicy);
