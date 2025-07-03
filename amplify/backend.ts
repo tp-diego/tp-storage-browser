@@ -9,33 +9,9 @@ const backend = defineBackend({
   storage,
 });
 
-
 const customBucketStack = backend.createStack("custom-bucket-stack");
 
 // Import existing bucket
-const customBucket = Bucket.fromBucketAttributes(customBucketStack, "MyCustomBucket", {
-  bucketArn: "arn:aws:s3:::systems-amplify-test",
-  region: "eu-central-1"
-});
-
-backend.addOutput({
-  storage: {
-    buckets: [
-      {
-        aws_region: customBucket.env.region,
-        bucket_name: customBucket.bucketName,
-        name: customBucket.bucketName,
-        // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
-        paths: {
-          "systems/*": {
-            groupsclientes: ["get", "list", "write", "delete"],
-          },
-        },
-      }
-    ]
-  },
-});
-
 const sabadell = Bucket.fromBucketAttributes(customBucketStack, "Sabadell", {
   bucketArn: "arn:aws:s3:::clientesabadell",
   region: "eu-west-1"
@@ -50,8 +26,8 @@ backend.addOutput({
         name: sabadell.bucketName,
         // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
-          "Grabaciones/Diaria/*": {
-            groupssabadell: ["get", "list", "write", "delete"],
+          "Grabaciones/*": {
+            groupssabadell: ["get", "list", "write"],
           },
         },
       }
@@ -74,7 +50,7 @@ backend.addOutput({
         // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
           "Grabaciones/*": {
-            groupssabadell: ["get", "list", "write", "delete"],
+            groupssabadell: ["get", "list", "write"],
           },
         },
       }
@@ -83,9 +59,9 @@ backend.addOutput({
 });
 
 /*
-  Define an inline policy to attach to "admin" user group role
+  Define an inline policy to attach to group role
   This policy defines how authenticated users with 
-  "admin" user group role can access your existing bucket
+  group role can access your existing buckets
 */ 
 const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
   statements: [
@@ -102,7 +78,6 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
   ],
 });
 
-// Add the policies to the "admin" user group role
-backend.auth.resources.groups["clientes"].role.attachInlinePolicy(accessPolicy);
+// Add the policies to the groups role
 backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["purificacion"].role.attachInlinePolicy(accessPolicy);
