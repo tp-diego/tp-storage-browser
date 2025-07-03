@@ -8,7 +8,7 @@ export const auth = defineAuth({
   loginWith: {
     email: true,
   },
-  groups: ['sabadell','purificacion'],
+  groups: ['sabadell','purificacion','astara','desigual','hipoges','mahou','marykay','nmprogram','naturgy','rba','redofisat','renault','svhcac','vantagetowers'],
   userAttributes: {
     // specify a "givenName" attribute
     givenName: {

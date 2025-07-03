@@ -37,7 +37,7 @@ backend.addOutput({
 
 const purificacion = Bucket.fromBucketAttributes(customBucketStack, "Purificacion", {
   bucketArn: "arn:aws:s3:::cliente-pg-ch",
-  region: "eu-west-1"
+  region: "eu-central-1"
 });
 
 backend.addOutput({
@@ -47,6 +47,29 @@ backend.addOutput({
         aws_region: purificacion.env.region,
         bucket_name: purificacion.bucketName,
         name: purificacion.bucketName,
+        // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
+        paths: {
+          "Grabaciones/*": {
+            groupssabadell: ["get", "list", "write"],
+          },
+        },
+      }
+    ]
+  },
+});
+
+const astara = Bucket.fromBucketAttributes(customBucketStack, "Astara", {
+  bucketArn: "arn:aws:s3:::clienteastara",
+  region: "eu-west-1"
+});
+
+backend.addOutput({
+  storage: {
+    buckets: [
+      {
+        aws_region: astara.env.region,
+        bucket_name: astara.bucketName,
+        name: astara.bucketName,
         // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
           "Grabaciones/*": {
@@ -81,3 +104,4 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
 // Add the policies to the groups role
 backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["purificacion"].role.attachInlinePolicy(accessPolicy);
+backend.auth.resources.groups["astara"].role.attachInlinePolicy(accessPolicy);
