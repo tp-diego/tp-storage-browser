@@ -81,6 +81,29 @@ backend.addOutput({
   },
 });
 
+const desigual = Bucket.fromBucketAttributes(customBucketStack, "Desigual", {
+  bucketArn: "arn:aws:s3:::clienteastara",
+  region: "eu-west-1"
+});
+
+backend.addOutput({
+  storage: {
+    buckets: [
+      {
+        aws_region: desigual.env.region,
+        bucket_name: desigual.bucketName,
+        name: desigual.bucketName,
+        // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
+        paths: {
+          "Grabaciones/*": {
+            groupssabadell: ["get", "list", "write"],
+          },
+        },
+      }
+    ]
+  },
+});
+
 /*
   Define an inline policy to attach to group role
   This policy defines how authenticated users with 
@@ -105,3 +128,4 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
 backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["purificacion"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["astara"].role.attachInlinePolicy(accessPolicy);
+backend.auth.resources.groups["desigual"].role.attachInlinePolicy(accessPolicy);
