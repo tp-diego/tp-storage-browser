@@ -82,7 +82,7 @@ backend.addOutput({
 });
 
 const desigual = Bucket.fromBucketAttributes(customBucketStack, "Desigual", {
-  bucketArn: "arn:aws:s3:::clienteastara",
+  bucketArn: "arn:aws:s3:::clientedesigual",
   region: "eu-west-1"
 });
 
