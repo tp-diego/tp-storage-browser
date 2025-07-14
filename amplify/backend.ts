@@ -50,7 +50,7 @@ backend.addOutput({
         // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
           "Grabaciones/*": {
-            groupssabadell: ["get", "list", "write"],
+            groupspurificacion: ["get", "list", "write"],
           },
         },
       }
@@ -73,7 +73,7 @@ backend.addOutput({
         // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
           "Grabaciones/*": {
-            groupssabadell: ["get", "list", "write"],
+            groupsastara: ["get", "list", "write"],
           },
         },
       }
@@ -96,7 +96,7 @@ backend.addOutput({
         // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
           "Grabaciones/*": {
-            groupssabadell: ["get", "list", "write"],
+            groupsdesigual: ["get", "list", "write"],
           },
         },
       }
