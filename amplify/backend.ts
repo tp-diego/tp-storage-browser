@@ -119,7 +119,7 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
         "s3:PutObject", 
         "s3:DeleteObject"
       ],
-      resources: [ "arn:aws:s3:::*"],
+      resources: [ "arn:aws:s3:::*", "arn:aws:s3:::*/*"],
     })
   ],
 });
