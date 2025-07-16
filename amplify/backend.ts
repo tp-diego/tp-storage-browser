@@ -140,7 +140,7 @@ const sabadellaccessPolicy = new Policy(backend.stack, "customBucketAdminPolicy"
       effect: Effect.ALLOW,
       actions: ["s3:ListBucket"],
       resources: [
-        `${sabadell.bucketArn}`
+        `${sabadell.bucketArn}`,
         `${sabadell.bucketArn}/*`
       ],
       conditions: {
