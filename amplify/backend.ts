@@ -34,7 +34,7 @@ backend.addOutput({
     ]
   },
 });
-
+/*
 const purificacion = Bucket.fromBucketAttributes(customBucketStack, "Purificacion", {
   bucketArn: "arn:aws:s3:::cliente-pg-ch",
   region: "eu-central-1"
@@ -103,12 +103,13 @@ backend.addOutput({
     ]
   },
 });
-
+*/
 /*
   Define an inline policy to attach to group role
   This policy defines how authenticated users with 
   group role can access your existing buckets
 */ 
+/*
 const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
   statements: [
     new PolicyStatement({
@@ -119,13 +120,51 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
         "s3:PutObject", 
         "s3:DeleteObject"
       ],
-      resources: [ "arn:aws:s3:::*", "arn:aws:s3:::*/*"],
+      resources: [ "arn:aws:s3:::*", "arn:aws:s3:::*"],
     })
   ],
 });
+*/
+const sabadellaccessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
+  statements: [
+    new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: [
+        "s3:GetObject",
+        "s3:PutObject", 
+        "s3:DeleteObject"
+      ],
+      resources: [ `${sabadell.bucketArn}/Grabaciones/*`],
+    }),
+    new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: ["s3:ListBucket"],
+      resources: [
+        `${sabadell.bucketArn}`
+        `${sabadell.bucketArn}/*`
+      ],
+      conditions: {
+        StringLike: {
+          "s3:prefix": ["Grabaciones/*", "Grabaciones/"],
+        },
+      },
+    }),
+  ],
+});
 
+backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(sabadellaccessPolicy);
+
+
+
+
+
+
+
+
+/*
 // Add the policies to the groups role
 backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["purificacion"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["astara"].role.attachInlinePolicy(accessPolicy);
 backend.auth.resources.groups["desigual"].role.attachInlinePolicy(accessPolicy);
+*/
