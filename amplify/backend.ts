@@ -16,6 +16,10 @@ const sabadell = Bucket.fromBucketAttributes(customBucketStack, "Sabadell", {
   bucketArn: "arn:aws:s3:::clientesabadell",
   region: "eu-west-1"
 });
+const astara = Bucket.fromBucketAttributes(customBucketStack, "Astara", {
+  bucketArn: "arn:aws:s3:::clienteastara",
+  region: "eu-west-1"
+});
 
 backend.addOutput({
   storage: {
@@ -28,6 +32,17 @@ backend.addOutput({
         paths: {
           "Grabaciones/*": {
             groupssabadell: ["get", "list", "write"],
+          },
+        },
+      },
+      {
+        aws_region: astara.env.region,
+        bucket_name: astara.bucketName,
+        name: astara.bucketName,
+        // @ts-expect-error: Amplify backend type issue - https://github.com/aws-amplify/amplify-backend/issues/2569
+        paths: {
+          "Grabaciones/*": {
+            groupsastara: ["get", "list", "write"],
           },
         },
       }
@@ -57,6 +72,7 @@ backend.addOutput({
     ]
   },
 });
+
 
 const astara = Bucket.fromBucketAttributes(customBucketStack, "Astara", {
   bucketArn: "arn:aws:s3:::clienteastara",
@@ -152,7 +168,35 @@ const sabadellaccessPolicy = new Policy(backend.stack, "customBucketAdminPolicy"
   ],
 });
 
+const astaraaccessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
+  statements: [
+    new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: [
+        "s3:GetObject",
+        "s3:PutObject", 
+        "s3:DeleteObject"
+      ],
+      resources: [ `${astara.bucketArn}/Grabaciones/*`],
+    }),
+    new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: ["s3:ListBucket"],
+      resources: [
+        `${astara.bucketArn}`,
+        `${astara.bucketArn}/*`
+      ],
+      conditions: {
+        StringLike: {
+          "s3:prefix": ["Grabaciones/*", "Grabaciones/"],
+        },
+      },
+    }),
+  ],
+});
+
 backend.auth.resources.groups["sabadell"].role.attachInlinePolicy(sabadellaccessPolicy);
+backend.auth.resources.groups["astara"].role.attachInlinePolicy(astaraaccessPolicy);
 
 
 
