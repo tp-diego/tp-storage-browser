@@ -141,7 +141,7 @@ const accessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
   ],
 });
 */
-const sabadellaccessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
+const sabadellaccessPolicy = new Policy(backend.stack, "sabadellBucketAdminPolicy", {
   statements: [
     new PolicyStatement({
       effect: Effect.ALLOW,
@@ -168,7 +168,7 @@ const sabadellaccessPolicy = new Policy(backend.stack, "customBucketAdminPolicy"
   ],
 });
 
-const astaraaccessPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
+const astaraaccessPolicy = new Policy(backend.stack, "astaraBucketAdminPolicy", {
   statements: [
     new PolicyStatement({
       effect: Effect.ALLOW,
